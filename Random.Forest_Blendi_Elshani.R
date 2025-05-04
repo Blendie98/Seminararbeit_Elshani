@@ -36,7 +36,6 @@ setwd("C:/Users/blend/Desktop/seminar new dataset")
 
 data <- read.csv("Housing_Construction_RF_Iterative_Imputed.csv")
 
-# View structure
 str(data)
 summary(data)
 
@@ -52,19 +51,18 @@ ggplot(data, aes(x = `Building.Completions`)) +
 
 
 
-# Boxplot for detecting outliers
+# Boxplot 
 ggplot(data, aes(y = `Building.Completions`)) +
   geom_boxplot(fill = "tomato", alpha = 0.6) +
   theme_minimal() +
   labs(title = "Boxplot of Building Completions")
 
 
-# Set font globally
 par(family = "sans", cex = 0.3)  
 
 
 
-# Correlation matrix (heatmap style)
+# Correlation matrix 
 cor_data <- cor(select(data, -Year))
 cor_data 
 
@@ -76,7 +74,7 @@ heatmap(cor_data, symm = TRUE, main = "Correlation Matrix of Features")
 
 
 # ========================
-# 4. Define Features and Target
+# 4. Features and Target
 # ========================
 target <- "Building.Completions"
 features <- setdiff(names(data), c("Year", target))
@@ -96,7 +94,7 @@ years_test <- data$Year[(split_idx + 1):nrow(data)]
 
 
 # ========================
-# 6. Train Random Forest Model
+# 6.Random Forest Model
 # ========================
 rf_model <- randomForest(x = X_train, y = y_train, ntree = 500)
 rf_model
@@ -182,7 +180,7 @@ ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +
 
 
 # ========================
-# 10. Save Outputs
+# 10.Outputs
 # ========================
 ggsave("actual_vs_predicted.png", width = 8, height = 5)
 ggsave("feature_importance.png", width = 8, height = 5)
